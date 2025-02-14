@@ -316,6 +316,9 @@ LOG_FILE="$HOME/titan_node_install.log"
 exec > >(tee -a "$LOG_FILE") 2>&1
 echo -e "\n\n[$(date)] Скрипт запущен." >> "$LOG_FILE"
 
+# Приветствие
+echo -e "${GREEN}${messages["welcome"]}${NC}"
+
 # Функция для выполнения команд с обработкой ошибок
 run_command() {
   local cmd="$@"
@@ -353,10 +356,10 @@ update_script() {
     mv /tmp/titan_node.sh "$0"
     chmod +x "$0"
 
-    # Удаление старого файла или симлинка, если он существует
+    # Удаление старого симлинка, если он существует
     if [ -e "/usr/local/bin/titan-node-menu" ]; then
       sudo rm /usr/local/bin/titan-node-menu
-      echo -e "${GREEN}Старый файл или симлинк удален.${NC}"
+      echo -e "${GREEN}Старый симлинк удален.${NC}"
     fi
 
     # Создание нового симлинка
