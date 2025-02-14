@@ -356,10 +356,10 @@ update_script() {
     mv /tmp/titan_node.sh "$0"
     chmod +x "$0"
 
-    # Удаление старого симлинка, если он существует
-    if [ -L "/usr/local/bin/titan-node-menu" ]; then
+    # Удаление старого файла или симлинка, если он существует
+    if [ -e "/usr/local/bin/titan-node-menu" ]; then
       sudo rm /usr/local/bin/titan-node-menu
-      echo -e "${GREEN}Старый симлинк удален.${NC}"
+      echo -e "${GREEN}Старый файл или симлинк удален.${NC}"
     fi
 
     # Создание нового симлинка
@@ -389,7 +389,6 @@ show_menu() {
     echo "6. ${messages["delete_node"]}"
     echo "7. ${messages["exit_script"]}"
     echo "8. ${messages["update_script"]}"
-    echo "9. Test Test"
     read -p "${messages["choose_option"]} " choice
 
     case $choice in
