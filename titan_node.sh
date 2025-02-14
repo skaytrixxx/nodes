@@ -387,9 +387,7 @@ show_menu() {
     echo "4. ${messages["restart_node"]}"
     echo "5. ${messages["stop_node"]}"
     echo "6. ${messages["delete_node"]}"
-    echo "7. ${messages["exit_script"]}"
     echo "8. ${messages["update_script"]}"
-    echo "15. TESTTTTTTT"
     read -p "${messages["choose_option"]} " choice
 
     case $choice in
