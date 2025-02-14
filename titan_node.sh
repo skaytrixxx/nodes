@@ -316,9 +316,6 @@ LOG_FILE="$HOME/titan_node_install.log"
 exec > >(tee -a "$LOG_FILE") 2>&1
 echo -e "\n\n[$(date)] Скрипт запущен." >> "$LOG_FILE"
 
-# Приветствие
-echo -e "${GREEN}${messages["welcome"]}${NC}"
-
 # Функция для выполнения команд с обработкой ошибок
 run_command() {
   local cmd="$@"
@@ -387,6 +384,7 @@ show_menu() {
     echo "4. ${messages["restart_node"]}"
     echo "5. ${messages["stop_node"]}"
     echo "6. ${messages["delete_node"]}"
+    echo "7. ${messages["exit_script"]}"
     echo "8. ${messages["update_script"]}"
     read -p "${messages["choose_option"]} " choice
 
