@@ -384,6 +384,7 @@ show_menu() {
     echo "7. ${messages["exit_script"]}"
     echo "8. ${messages["update_script"]}"
     echo "9. Tess"
+    echo "11. Tesster"
     read -p "${messages["choose_option"]} " choice
 
     case $choice in
