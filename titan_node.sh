@@ -355,6 +355,13 @@ update_script() {
     # Замена текущего скрипта на новую версию
     mv /tmp/titan_node.sh "$0"
     chmod +x "$0"
+
+    # Обновление симлинка
+    if [ -L /usr/local/bin/titan-node-menu ]; then
+      sudo rm /usr/local/bin/titan-node-menu
+    fi
+    sudo ln -s "$0" /usr/local/bin/titan-node-menu
+
     echo -e "${GREEN}${messages["script_updated"]}${NC}"
     exit 0
   fi
