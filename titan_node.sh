@@ -94,6 +94,7 @@ set_language() {
         ["exit_script"]="Вийти зі скрипту"
         ["update_script"]="Оновити скрипт"
         ["choose_option"]="Виберіть пункт меню:"
+        ["test_messages"]="Тест тест тест"
         ["checking_updates"]="Перевірка оновлень скрипта..."
         ["script_up_to_date"]="Скрипт вже оновлений."
         ["script_updated"]="Скрипт успішно оновлено. Перезапустіть його."
@@ -385,6 +386,7 @@ show_menu() {
     echo "6. ${messages["delete_node"]}"
     echo "7. ${messages["exit_script"]}"
     echo "8. ${messages["update_script"]}"
+    echo "9. ${messages["test_messages"]}"
     read -p "${messages["choose_option"]} " choice
 
     case $choice in
