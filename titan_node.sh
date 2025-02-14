@@ -345,11 +345,15 @@ update_script() {
     mv /tmp/titan_node.sh "$0"
     chmod +x "$0"
 
-    # Обновление симлинка
-    if [ -L /usr/local/bin/titan-node-menu ]; then
+    # Удаление старого симлинка, если он существует
+    if [ -L "/usr/local/bin/titan-node-menu" ]; then
       sudo rm /usr/local/bin/titan-node-menu
+      echo -e "${GREEN}Старый симлинк удален.${NC}"
     fi
+
+    # Создание нового симлинка
     sudo ln -s "$0" /usr/local/bin/titan-node-menu
+    echo -e "${GREEN}Новый симлинк создан.${NC}"
 
     echo -e "${GREEN}${messages["script_updated"]}${NC}"
     exit 0
