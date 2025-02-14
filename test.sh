@@ -49,9 +49,11 @@ set_language() {
         ["exit_script"]="Выйти из скрипта"
         ["update_script"]="Обновить скрипт"
         ["choose_option"]="Выберите пункт меню:"
-        ["checking_updates"]="Проверка обновлений скрипта..."
-        ["script_up_to_date"]="Скрипт уже обновлен."
-        ["script_updated"]="Скрипт успешно обновлен. Перезапустите его."
+        ["checking_updates"]="Проверка обновлений..."
+        ["update_found"]="Найдено обновление. Обновление скрипта..."
+        ["update_completed"]="Скрипт успешно обновлен. Перезапустите скрипт для применения изменений."
+        ["no_updates"]="Обновлений не найдено."
+        ["update_error"]="Ошибка при проверке обновлений."
         ["error_command_failed"]="Ошибка при выполнении команды: %s"
         ["welcome"]="Підпишись на канал про ТЄМКИ СХЄМКИ @temkasxema"
       )
@@ -94,9 +96,11 @@ set_language() {
         ["exit_script"]="Вийти зі скрипту"
         ["update_script"]="Оновити скрипт"
         ["choose_option"]="Виберіть пункт меню:"
-        ["checking_updates"]="Перевірка оновлень скрипта..."
-        ["script_up_to_date"]="Скрипт вже оновлений."
-        ["script_updated"]="Скрипт успішно оновлено. Перезапустіть його."
+        ["checking_updates"]="Перевірка оновлень..."
+        ["update_found"]="Знайдено оновлення. Оновлення скрипту..."
+        ["update_completed"]="Скрипт успішно оновлено. Перезапустіть скрипт для застосування змін."
+        ["no_updates"]="Оновлень не знайдено."
+        ["update_error"]="Помилка при перевірці оновлень."
         ["error_command_failed"]="Помилка при виконанні команди: %s"
         ["welcome"]="Підпишись на канал про ТЄМКИ СХЄМКИ @temkasxema"
       )
@@ -139,9 +143,11 @@ set_language() {
         ["exit_script"]="Exit script"
         ["update_script"]="Update script"
         ["choose_option"]="Choose an option:"
-        ["checking_updates"]="Checking for script updates..."
-        ["script_up_to_date"]="The script is already up to date."
-        ["script_updated"]="The script has been updated. Please restart it."
+        ["checking_updates"]="Checking for updates..."
+        ["update_found"]="Update found. Updating script..."
+        ["update_completed"]="Script updated successfully. Restart the script to apply changes."
+        ["no_updates"]="No updates found."
+        ["update_error"]="Error checking for updates."
         ["error_command_failed"]="Error executing command: %s"
         ["welcome"]="Підпишись на канал про ТЄМКИ СХЄМКИ @temkasxema"
       )
@@ -343,25 +349,25 @@ check_ports() {
 
 # Функция для обновления скрипта через GitHub репозиторий
 update_script() {
-  local REPO_URL="https://raw.githubusercontent.com/skaytrixxx/nodes/main/test.sh"
+  local REPO_URL="https://raw.githubusercontent.com/ваш_пользователь/ваш_репозиторий/main/ваш_скрипт.sh"
   local TEMP_FILE=$(mktemp)
 
-  echo -e "${YELLOW}Проверка обновлений...${NC}"
+  echo -e "${YELLOW}${messages["checking_updates"]}${NC}"
   
   # Загрузка последней версии скрипта
   if curl -s "$REPO_URL" -o "$TEMP_FILE"; then
     # Сравнение текущей версии скрипта с загруженной
     if ! diff -q "$0" "$TEMP_FILE" > /dev/null; then
-      echo -e "${GREEN}Найдено обновление. Обновление скрипта...${NC}"
+      echo -e "${GREEN}${messages["update_found"]}${NC}"
       mv "$TEMP_FILE" "$0"
       chmod +x "$0"
-      echo -e "${GREEN}Скрипт успешно обновлен. Перезапустите скрипт для применения изменений.${NC}"
+      echo -e "${GREEN}${messages["update_completed"]}${NC}"
     else
-      echo -e "${GREEN}Обновлений не найдено.${NC}"
+      echo -e "${GREEN}${messages["no_updates"]}${NC}"
       rm "$TEMP_FILE"
     fi
   else
-    echo -e "${RED}Ошибка при проверке обновлений.${NC}"
+    echo -e "${RED}${messages["update_error"]}${NC}"
     rm "$TEMP_FILE"
   fi
 }
@@ -382,8 +388,8 @@ show_menu() {
     echo "4. ${messages["restart_node"]}"
     echo "5. ${messages["stop_node"]}"
     echo "6. ${messages["delete_node"]}"
-    echo "7. ${messages["exit_script"]}"
-    echo "8. ${messages["update_script"]}"
+    echo "7. ${messages["update_script"]}"
+    echo "8. ${messages["exit_script"]}"
     read -p "${messages["choose_option"]} " choice
 
     case $choice in
@@ -408,10 +414,10 @@ show_menu() {
         delete_node
         ;;
       7)
-        exit_from_script
+        update_script
         ;;
       8)
-        update_script
+        exit_from_script
         ;;
       *)
         echo -e "${RED}${messages["invalid_choice"]}${NC}"
