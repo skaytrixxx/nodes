@@ -330,18 +330,6 @@ run_command() {
   fi
 }
 
-# Функция для проверки занятости портов с помощью ss
-check_ports() {
-  local ports=("1234" "55702" "48710")
-  for port in "${ports[@]}"; do
-    if ss -tuln | grep -q ":$port "; then
-      echo -e "${RED}$(printf "${messages["port_busy"]}" "$port")${NC}"
-      exit 1
-    fi
-  done
-  echo -e "${GREEN}${messages["ports_free"]}${NC}"
-}
-
 # Функция для обновления скрипта
 update_script() {
   echo -e "${YELLOW}${messages["checking_updates"]}${NC}"
