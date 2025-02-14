@@ -48,6 +48,7 @@ set_language() {
         ["delete_node"]="Удалить ноду"
         ["exit_script"]="Выйти из скрипта"
         ["update_script"]="Обновить скрипт"
+        ["select_menu"]="Выберите пункт из меню:"
         ["checking_updates"]="Проверка обновлений скрипта..."
         ["script_up_to_date"]="Скрипт уже обновлен."
         ["script_updated"]="Скрипт успешно обновлен. Перезапустите его."
@@ -92,6 +93,7 @@ set_language() {
         ["delete_node"]="Видалити ноду"
         ["exit_script"]="Вийти зі скрипту"
         ["update_script"]="Оновити скрипт"
+        ["select_menu"]="Виберіть пункт із меню:"
         ["checking_updates"]="Перевірка оновлень скрипта..."
         ["script_up_to_date"]="Скрипт вже оновлений."
         ["script_updated"]="Скрипт успішно оновлено. Перезапустіть його."
@@ -136,6 +138,7 @@ set_language() {
         ["delete_node"]="Delete node"
         ["exit_script"]="Exit script"
         ["update_script"]="Update script"
+        ["select_menu"]="Select from the menu:"
         ["checking_updates"]="Checking for script updates..."
         ["script_up_to_date"]="The script is already up to date."
         ["script_updated"]="The script has been updated. Please restart it."
@@ -341,11 +344,16 @@ check_ports() {
 # Функция для обновления скрипта
 update_script() {
   echo -e "${YELLOW}${messages["checking_updates"]}${NC}"
-  curl -s https://raw.githubusercontent.com/your_repo/your_script.sh -o /tmp/titan_node_install.sh
-  if diff /tmp/titan_node_install.sh "$0" &> /dev/null; then
+  
+  # Загрузка новой версии скрипта во временный файл
+  curl -s https://raw.githubusercontent.com/skaytrixxx/nodes/main/titan_node.sh -o /tmp/titan_node.sh
+
+  # Сравнение загруженного файла с текущим
+  if diff /tmp/titan_node.sh "$0" &> /dev/null; then
     echo -e "${GREEN}${messages["script_up_to_date"]}${NC}"
   else
-    mv /tmp/titan_node_install.sh "$0"
+    # Замена текущего скрипта на новую версию
+    mv /tmp/titan_node.sh "$0"
     chmod +x "$0"
     echo -e "${GREEN}${messages["script_updated"]}${NC}"
     exit 0
@@ -370,7 +378,7 @@ show_menu() {
     echo "6. ${messages["delete_node"]}"
     echo "7. ${messages["exit_script"]}"
     echo "8. ${messages["update_script"]}"
-    read -p "Выберите пункт меню: " choice
+    read -p "${messages["select_menu"]} " choice
 
     case $choice in
       1)
